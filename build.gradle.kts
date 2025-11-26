@@ -57,7 +57,7 @@ tasks.withType<Test> {
 // Create fat JAR with all dependencies
 tasks.jar {
     manifest {
-        attributes["Main-Class"] = "com.buckshotroulette.buckshotroulette.MainKt"
+        attributes["Main-Class"] = "com.melikshotroulette.melikshotroulette.MainKt"
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
