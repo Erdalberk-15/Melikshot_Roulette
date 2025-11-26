@@ -54,21 +54,25 @@ class GameView(private val gameState: GameState, private val controller: GameCon
         player2LifeLabel.style = "-fx-letter-spacing: 5px;"
         
         player2ItemsGrid = createItemsGrid()
-        player2ItemsGrid.children.forEach { node ->
-            if (node is VBox) {
-                setupItemClickHandler(node, 1)
+        
+        // Only show Player 2 in two-player mode
+        if (gameState.mode == GameMode.TWO_PLAYER) {
+            player2ItemsGrid.children.forEach { node ->
+                if (node is VBox) {
+                    setupItemClickHandler(node, 1)
+                }
             }
+            
+            // Add character image for Player 2
+            val player2CharImage = createCharacterImage(gameState.players[1].name)
+            
+            player2Box.children.addAll(p2Title, player2LifeLabel, Label("Items:").apply {
+                font = Font.font("Arial", FontWeight.BOLD, 16.0)
+                textFill = Color.web("#cccccc")
+            }, player2ItemsGrid, player2CharImage)
+            
+            root.left = player2Box
         }
-        
-        // Add character image for Player 2
-        val player2CharImage = createCharacterImage(gameState.players[1].name)
-        
-        player2Box.children.addAll(p2Title, player2LifeLabel, Label("Items:").apply {
-            font = Font.font("Arial", FontWeight.BOLD, 16.0)
-            textFill = Color.web("#cccccc")
-        }, player2ItemsGrid, player2CharImage)
-        
-        root.left = player2Box
         
         // Right side - Player 1
         player1Box = VBox(15.0)

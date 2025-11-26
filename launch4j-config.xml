@@ -2,7 +2,7 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>build\libs\MelikshotRoulette-1.0-SNAPSHOT.jar
+  <jar>build\libs\MelikshotRoulette-1.0-SNAPSHOT.jar</jar>
   <outfile>MelikshotRoulette2D.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
@@ -24,12 +24,12 @@
     <maxHeapSize>1024</maxHeapSize>
   </jre>
   <versionInfo>
-    <fileVersion>1.0.0.1</fileVersion>
-    <txtFileVersion>1.0.1</txtFileVersion>
+    <fileVersion>1.0.0.2</fileVersion>
+    <txtFileVersion>1.0.2</txtFileVersion>
     <fileDescription>Maded By Erdalberk15</fileDescription>
     <copyright>Creative Commons</copyright>
-    <productVersion>1.0.0.1</productVersion>
-    <txtProductVersion>1.0.1</txtProductVersion>
+    <productVersion>1.0.0.2</productVersion>
+    <txtProductVersion>1.0.2</txtProductVersion>
     <productName>MelikshotRoulette2D</productName>
     <companyName>Erdalberk15</companyName>
     <internalName>Erdalberk15</internalName>

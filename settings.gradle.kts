@@ -3,4 +3,4 @@ pluginManagement {
         kotlin("jvm") version "2.2.20"
     }
 }
-rootProject.name = "BuckshotRoulette"
+rootProject.name = "MelikshotRoulette"

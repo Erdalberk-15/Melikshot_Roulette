@@ -143,6 +143,18 @@ class GameState(val mode: GameMode, player1Character: String = "Player 1", playe
         repeat(6 - loadedCount) { chambers.add(false) }
         chambers.shuffle()
         currentChamberIndex = 0
+        
+        // Print chamber contents
+        println("\n╔════════════════════════════════════╗")
+        println("║     NEW CHAMBER LOADED             ║")
+        println("╚════════════════════════════════════╝")
+        println("Chamber contents:")
+        chambers.forEachIndexed { index, isLoaded ->
+            val bullet = if (isLoaded) "🔴 LOADED" else "⚪ EMPTY"
+            println("  Position ${index + 1}: $bullet")
+        }
+        println("Total: $loadedCount loaded, ${6 - loadedCount} empty")
+        println("════════════════════════════════════\n")
     }
     
     fun getCurrentPlayer(): Player = players[currentPlayerIndex]
@@ -169,11 +181,20 @@ class GameState(val mode: GameMode, player1Character: String = "Player 1", playe
         val shooter = getCurrentPlayer()
         val targetPlayer = if (target == ShootTarget.SELF) shooter else getOpponentPlayer()!!
         
+        // Log round information
+        println("\n========== ROUND $roundNumber ==========")
+        println("Shooter: ${shooter.name}")
+        println("Target: ${if (target == ShootTarget.SELF) "Self" else targetPlayer.name}")
+        println("Chamber: ${if (isLoaded) "LOADED" else "EMPTY"}")
+        println("Remaining chambers: ${getRemainingChambers()}")
+        
         currentChamberIndex++
         
         val result = if (isLoaded) {
             val damage = if (doubleDamageActive) 2 else 1
             targetPlayer.lives -= damage
+            println("Result: HIT! -$damage life")
+            println("${targetPlayer.name} lives: ${targetPlayer.lives}/${targetPlayer.maxLives}")
             doubleDamageActive = false
             if (target == ShootTarget.SELF) {
                 ShootResult.SELF_HIT
@@ -181,6 +202,7 @@ class GameState(val mode: GameMode, player1Character: String = "Player 1", playe
                 ShootResult.OPPONENT_HIT
             }
         } else {
+            println("Result: CLICK! Empty chamber")
             if (target == ShootTarget.SELF) {
                 ShootResult.SELF_SAFE
             } else {
@@ -190,13 +212,17 @@ class GameState(val mode: GameMode, player1Character: String = "Player 1", playe
         
         // Check if we need to reload
         if (currentChamberIndex >= chambers.size) {
+            println("Reloading chambers...")
             loadChambers()
         }
         
         // Spawn items after a successful shot (loaded chamber)
         if (isLoaded) {
             spawnRandomItemsForAllPlayers()
+            println("Items spawned for all players")
         }
+        
+        println("====================================\n")
         
         return result
     }
@@ -239,12 +265,6 @@ class GameState(val mode: GameMode, player1Character: String = "Player 1", playe
         return players.firstOrNull { it.isAlive() }
     }
 }
-
-data class GameStateSnapshot(
-    val chamberIndex: Int,
-    val playerIndex: Int,
-    val playerLives: List<Int>
-)
 
 enum class ShootResult {
     SELF_SAFE,
